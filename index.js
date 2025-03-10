@@ -13,12 +13,19 @@ console.log(stripe); // Ensure Stripe is initialized correctly
 connectDB();
 
 // Handling CORS policy issue
-const corsOption = {
-  origin: process.env.BASE_URL || "https://eatery-app.vercel.app",
-  method: "GET, POST, PUT, DELETE, PATCH, HEAD",
-  credentials: true,
+const corsOptions = {
+  origin: [
+    "https://eatery-app.vercel.app",  
+    "https://weeat-client-deploy.web.app",  
+    
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], 
+  credentials: true,  
 };
-app.options('*', cors(corsOptions)); 
+
+
+app.use(cors(corsOptions)); 
+app.options('*', cors(corsOptions));
 
 //? Middleware
 app.use(express.json());
