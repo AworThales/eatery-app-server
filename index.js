@@ -13,7 +13,7 @@ console.log(stripe); // Ensure Stripe is initialized correctly
 connectDB();
 
 // Handling CORS policy issue
-app.use(cors({ origin: "https://eatery-app-server-3.onrender.com/", credentials: true }));
+app.use(cors({ origin: "https://eatery-app.vercel.app", credentials: true }));
 
 //? Middleware
 app.use(express.json());
