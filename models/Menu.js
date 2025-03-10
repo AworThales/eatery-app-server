@@ -1,7 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-// Create Schema for Menu Items
-const menuSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -19,5 +18,4 @@ const menuSchema = new Schema({
 });
 
 // create model
-const Menu = model("Menu", menuSchema);
-module.exports = Menu;
+module.exports = mongoose.model("Menu", UserSchema);

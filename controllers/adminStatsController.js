@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"); // Import mongoose here
-const User = require("../models/User");
+const User = require("../models/User.js");
 const Menu = require("../models/menu");
 const Payment = require("../models/Payment");
 
