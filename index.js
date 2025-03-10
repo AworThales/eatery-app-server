@@ -14,7 +14,7 @@ connectDB();
 
 // Handling CORS policy issue
 const corsOption = {
-  origin: process.env.BASE_URL,
+  origin: process.env.BASE_URL || "https://eatery-app.vercel.app",
   method: "GET, POST, PUT, DELETE, PATCH, HEAD",
   credentials: true,
 };
