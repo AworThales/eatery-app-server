@@ -1,4 +1,4 @@
-const Menu = require("../models/menu");
+const Menu = require("../models/Menu");
 
 
 //GET All Menu items operations

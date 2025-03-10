@@ -4,10 +4,16 @@ const Payment = require("../models/Payment");
 
 // Get all orders stats
 const getAllOrderStats = async (req, res) => {
+    
   try {
     const result = await Payment.aggregate([
         {
             $unwind: "$menuItems"
+        },
+        {
+            $set: {
+                menuItems: { $toObjectId: "$menuItems" } // Convert to ObjectId
+            }
         },
         {
             $lookup: {
@@ -36,6 +42,7 @@ const getAllOrderStats = async (req, res) => {
             }
         },
     ]);
+    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ "Internal Server Error": + error.message });
