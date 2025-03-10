@@ -7,12 +7,12 @@ const port = process.env.PORT || 3000;
 const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-console.log(stripe)
+console.log(stripe); // Ensure Stripe is initialized correctly
 
 //? Database connection call
 connectDB();
 
-// Handling CORS policy issue which occurs due to run two diffrent servers for frontend or backend
+// Handling CORS policy issue
 const corsOption = {
   origin: process.env.BASE_URL,
   method: "GET, POST, PUT, DELETE, PATCH, HEAD",
@@ -20,8 +20,7 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 
-//? MiddleWare
-app.use(cors());
+//? Middleware
 app.use(express.json());
 
 //? JWT Authentication
@@ -33,8 +32,8 @@ app.post("/jwt", async (req, res) => {
   res.send({ token });
 });
 
-// imports Routes here
-const menuRoutes = require("./routes/MenuRoutes");
+// Imports Routes here
+const menuRoutes = require("./routes/menuRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const userRoutes = require("./routes/userRoute");
 const paymentRoutes = require("./routes/paymentRoute");
@@ -54,10 +53,11 @@ app.post("/create-payment-intent", async (req, res) => {
 
   if (isNaN(price) || price < 1) {
     console.log("Invalid Price");
-    return;
+    return res.status(400).json({ error: "Invalid price" });
   }
+
   try {
-    const amount = price * 100;
+    const amount = price * 100; // Convert price to cents
 
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
@@ -66,12 +66,12 @@ app.post("/create-payment-intent", async (req, res) => {
       payment_method_types: ["card"],
     });
 
-    res.send({
+    return res.status(200).send({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error) {
-    console.error("Error creating PaymentIntent:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error creating PaymentIntent:", error);
+    return res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 });
 
