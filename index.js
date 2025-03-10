@@ -18,7 +18,7 @@ const corsOption = {
   method: "GET, POST, PUT, DELETE, PATCH, HEAD",
   credentials: true,
 };
-app.use(cors(corsOption));
+app.options('*', cors(corsOptions)); 
 
 //? Middleware
 app.use(express.json());
